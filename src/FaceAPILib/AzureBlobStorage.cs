@@ -28,5 +28,11 @@ namespace FaceAPILib
                 .Uri
                 .AbsoluteUri;
         }
+
+        public override string SaveImage(CaptureImage Image)
+        {
+            //TODO
+            throw new System.NotImplementedException();
+        }
     }
 }

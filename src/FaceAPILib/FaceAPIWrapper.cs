@@ -9,20 +9,20 @@ using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
 
 namespace FaceAPILib
 {
-    public class FaceAPI
+    public class FaceAPIWrapper
     {
         private string SUBSCRIPTION_KEY = Environment.GetEnvironmentVariable("FACE_SUBSCRIPTION_KEY");
         private string ENDPOINT = Environment.GetEnvironmentVariable("FACE_ENDPOINT");
-
-        AzureBlobStorage blobhelper = new AzureBlobStorage();
         private string IMAGE_BASE_URL;
         public IFaceClient faceAPIClient;
-        private string imageName;
+        private CaptureImage imageName;
 
-        public FaceAPI(string imageName)
+        AzureBlobStorage blobhelper = new AzureBlobStorage();
+
+        public FaceAPIWrapper(CaptureImage image)
         {
-            this.imageName = imageName;
-            IMAGE_BASE_URL = blobhelper.GetImageUrl(imageName);
+            this.imageName = image;
+            IMAGE_BASE_URL = blobhelper.GetImageUrl(string.Format("{0}.{1}", image.ImageName, image.ImageExtension));
             faceAPIClient = blobhelper.AuthenticateToStorageService(ENDPOINT, SUBSCRIPTION_KEY);
         }
 
@@ -39,9 +39,10 @@ namespace FaceAPILib
         public async Task<int> DetectFaceExtract(IFaceClient client, string url, string recognitionModel)
         { 
             IList<DetectedFace> detectedFaces;
-            detectedFaces = await client.Face.DetectWithUrlAsync($"{url}{imageName}",
+            detectedFaces = await client.Face.DetectWithUrlAsync($"{url}{string.Format("{0}.{1}", imageName.ImageName, imageName.ImageExtension)}",
                     returnFaceAttributes: new List<FaceAttributeType> { FaceAttributeType.Accessories, FaceAttributeType.Age },
                     recognitionModel: recognitionModel);
+
             Console.WriteLine($"{detectedFaces.Count} face(s) detected from image `{imageName}`.");
             return (int)detectedFaces[0].FaceAttributes.Age;
         }

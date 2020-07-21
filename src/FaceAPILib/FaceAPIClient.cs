@@ -10,5 +10,7 @@ namespace FaceAPILib
         public abstract IFaceClient AuthenticateToStorageService(string endpoint, string key);
 
         public abstract string GetImageUrl(string imageName);
+
+        public abstract string SaveImage(CaptureImage image);
     }
 }
