@@ -28,7 +28,5 @@ namespace FaceAPILib
                 .Uri
                 .AbsoluteUri;
         }
-
-
     }
 }

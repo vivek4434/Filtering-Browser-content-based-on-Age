@@ -17,9 +17,11 @@ namespace FaceAPILib
         AzureBlobStorage blobhelper = new AzureBlobStorage();
         private string IMAGE_BASE_URL;
         public IFaceClient faceAPIClient;
+        private string imageName;
 
         public FaceAPI(string imageName)
         {
+            this.imageName = imageName;
             IMAGE_BASE_URL = blobhelper.GetImageUrl(imageName);
             faceAPIClient = blobhelper.AuthenticateToStorageService(ENDPOINT, SUBSCRIPTION_KEY);
         }
@@ -34,35 +36,14 @@ namespace FaceAPILib
                 .GetResult();
         }
 
-        public static async Task<int> DetectFaceExtract(IFaceClient client, string url, string recognitionModel)
-        {
-            Console.WriteLine("========DETECT FACES========");
-            Console.WriteLine();
-
-            // Create a list of images
-            List<string> imageFileNames = new List<string>
-                    {
-                        "detection1.jpg",    // single female with glasses
-                        // "detection2.jpg", // (optional: single man)
-                        // "detection3.jpg", // (optional: single male construction worker)
-                        // "detection4.jpg", // (optional: 3 people at cafe, 1 is blurred)
-                        "detection5.jpg",    // family, woman child man
-                        "detection6.jpg"     // elderly couple, male female
-                    };
-
-            foreach (var imageFileName in imageFileNames)
-            {
-                IList<DetectedFace> detectedFaces;
-
-                // Detect faces with all attributes from image url.
-                detectedFaces = await client.Face.DetectWithUrlAsync($"{url}{imageFileName}",
-                        returnFaceAttributes: new List<FaceAttributeType> { FaceAttributeType.Accessories, FaceAttributeType.Age},
-                        recognitionModel: recognitionModel);
-                Console.WriteLine($"{detectedFaces.Count} face(s) detected from image `{imageFileName}`.");
-                return (int)detectedFaces[0].FaceAttributes.Age;
-            }
-
-            return 0;
+        public async Task<int> DetectFaceExtract(IFaceClient client, string url, string recognitionModel)
+        { 
+            IList<DetectedFace> detectedFaces;
+            detectedFaces = await client.Face.DetectWithUrlAsync($"{url}{imageName}",
+                    returnFaceAttributes: new List<FaceAttributeType> { FaceAttributeType.Accessories, FaceAttributeType.Age },
+                    recognitionModel: recognitionModel);
+            Console.WriteLine($"{detectedFaces.Count} face(s) detected from image `{imageName}`.");
+            return (int)detectedFaces[0].FaceAttributes.Age;
         }
     }
 }
