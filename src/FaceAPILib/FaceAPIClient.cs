@@ -11,6 +11,6 @@ namespace FaceAPILib
 
         public abstract string GetImageUrl(string imageName);
 
-        public abstract string SaveImage(CaptureImage image);
+        public abstract bool SaveImage(CaptureImage image);
     }
 }
