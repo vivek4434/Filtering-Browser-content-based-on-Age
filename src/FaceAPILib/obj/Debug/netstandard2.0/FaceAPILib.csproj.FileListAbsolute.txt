@@ -1,0 +1,5 @@
+C:\Users\Public\HackathonProject\Filtering-Browser-content-based-on-Age\src\FaceAPILib\bin\Debug\netstandard2.0\FaceAPILib.deps.json
+C:\Users\Public\HackathonProject\Filtering-Browser-content-based-on-Age\src\FaceAPILib\bin\Debug\netstandard2.0\FaceAPILib.dll
+C:\Users\Public\HackathonProject\Filtering-Browser-content-based-on-Age\src\FaceAPILib\obj\Debug\netstandard2.0\FaceAPILib.csprojAssemblyReference.cache
+C:\Users\Public\HackathonProject\Filtering-Browser-content-based-on-Age\src\FaceAPILib\obj\Debug\netstandard2.0\FaceAPILib.AssemblyInfoInputs.cache
+C:\Users\Public\HackathonProject\Filtering-Browser-content-based-on-Age\src\FaceAPILib\obj\Debug\netstandard2.0\FaceAPILib.AssemblyInfo.cs
